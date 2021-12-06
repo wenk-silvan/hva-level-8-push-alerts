@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">MadLevel8PushAlerts</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="email_fragment_label">Email</string>
+    <string name="code_fragment_label">Code</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="tilEmail">Email</string>
+    <string name="tilPassword">Password</string>
+    <string name="btnLogin">Login</string>
+    <string name="login_successful">Login successful</string>"Please fill credentials"
+    <string name="fill_credentials">Please fill credentials</string>
 </resources>

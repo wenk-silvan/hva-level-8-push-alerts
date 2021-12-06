@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="nl.hva.madlevel8pushalerts.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:name="nl.hva.madlevel8pushalerts.ui.tasks.FirstFragment"
+        android:label="Push Tasks"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -17,8 +17,8 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="nl.hva.madlevel8pushalerts.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:name="nl.hva.madlevel8pushalerts.ui.tasks.SecondFragment"
+        android:label="Push Tasks"
         tools:layout="@layout/fragment_second">
 
         <action

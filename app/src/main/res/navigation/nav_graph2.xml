@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/EmailFragment">
+
+    <fragment
+        android:id="@+id/EmailFragment"
+        android:name="nl.hva.madlevel8pushalerts.ui.login.EmailFragment"
+        android:label="@string/email_fragment_label"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_EmailFragment_to_CodeFragment"
+            app:destination="@id/CodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CodeFragment"
+        android:name="nl.hva.madlevel8pushalerts.ui.login.CodeFragment"
+        android:label="@string/code_fragment_label"
+        tools:layout="@layout/fragment_code">
+
+        <action
+            android:id="@+id/action_CodeFragment_to_EmailFragment"
+            app:destination="@id/CodeFragment" />
+    </fragment>
+</navigation>
