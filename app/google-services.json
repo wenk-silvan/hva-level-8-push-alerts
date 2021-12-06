@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "607145546120",
+    "project_id": "madlevel8pushalerts",
+    "storage_bucket": "madlevel8pushalerts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607145546120:android:de1150c4d7bd839f742a3d",
+        "android_client_info": {
+          "package_name": "nl.hva.madlevel8pushalerts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607145546120-uhjkssu3bau52bvr9valv4trbort12ah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrkeih0eCETojrl9g64PS46xITQ9_U-hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607145546120-uhjkssu3bau52bvr9valv4trbort12ah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
