@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 class User(
     @DocumentId val _id: String = "",
     val name: String = "",
+    val email: String = "",
     ) : Parcelable {
-    constructor() : this("", "")
+    constructor() : this("", "", "")
 }

@@ -5,12 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import nl.hva.madlevel8pushalerts.databinding.FragmentTabOpenBinding
+import nl.hva.madlevel8pushalerts.models.Task
+import nl.hva.madlevel8pushalerts.viewModels.TasksViewModel
 
 class TabOpenFragment : Fragment() {
     private var _binding: FragmentTabOpenBinding? = null
     private val binding get() = _binding!!
-//    private val recyclerViewAdapter = AttachmentsAdapter(attachments)
+    private val viewModel: TasksViewModel by activityViewModels()
+    private val tasks: ArrayList<Task> = arrayListOf()
+    private lateinit var recyclerViewAdapter: OpenTasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +33,10 @@ class TabOpenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initRecyclerView()
+        viewModel.tasks.value?.let { tasks.addAll(it) }
+        recyclerViewAdapter = OpenTasksAdapter(tasks, {t: Task -> onClickBtnAssign(t)}, {t: Task -> onClickBtnClose(t)}, {t: Task -> onClickBtnUnassign(t)})
+        initRecyclerView()
+        observeTasks()
     }
 
     override fun onDestroyView() {
@@ -30,13 +44,33 @@ class TabOpenFragment : Fragment() {
         _binding = null
     }
 
-//    private fun initRecyclerView() {
-//        binding.rvTabAttachments.layoutManager =
-//            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-//        binding.rvTabAttachments.adapter = recyclerViewAdapter
-//        binding.rvTabAttachments.isNestedScrollingEnabled = false
-//        binding.rvTabAttachments.addItemDecoration(
-//            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-//        )
-//    }
+    private fun initRecyclerView() {
+        binding.rvTasks.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvTasks.adapter = recyclerViewAdapter
+        binding.rvTasks.isNestedScrollingEnabled = false
+        binding.rvTasks.addItemDecoration(
+            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        )
+    }
+
+    private fun observeTasks() {
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            tasks.clear()
+            tasks.addAll(it.filter { t -> t.closedAt == null })
+            recyclerViewAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun onClickBtnAssign(task: Task) {
+        viewModel.updateTask(task._id, "userId", Firebase.auth.currentUser!!.uid)
+    }
+
+    private fun onClickBtnClose(task: Task) {
+        viewModel.updateTask(task._id, "closedAt", Timestamp.now())
+    }
+
+    private fun onClickBtnUnassign(task: Task) {
+        viewModel.updateTask(task._id, "userId", "")
+    }
 }

@@ -11,4 +11,6 @@
     <string name="tiTasksClosed">Closed</string>
     <string name="tiTasksOpen">Open</string>
     <string name="btnAssign">Assign Me</string>
+    <string name="btnUnassign">Unassign</string>
+    <string name="btnClose">close</string>
 </resources>

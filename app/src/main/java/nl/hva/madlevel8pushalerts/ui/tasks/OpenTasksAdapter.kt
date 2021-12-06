@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import nl.hva.madlevel8pushalerts.R
 import nl.hva.madlevel8pushalerts.databinding.ItemTaskOpenBinding
 import nl.hva.madlevel8pushalerts.models.Task
@@ -13,7 +15,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class OpenTasksAdapter(
-    private val tasks: List<Task>
+    private val tasks: List<Task>,
+    val onClickBtnAssign: (Task) -> Unit,
+    val onClickBtnClose: (Task) -> Unit,
+    val onClickBtnUnassign: (Task) -> Unit,
 ) :
     RecyclerView.Adapter<OpenTasksAdapter.ViewHolder>() {
 
@@ -28,13 +33,23 @@ class OpenTasksAdapter(
             binding.tvTaskCreatedAt.text = formatTimestamp(task.createdAt)
             binding.tvTaskNumber.text = "#${task.number}"
 
+            binding.btnAssign.setOnClickListener { onClickBtnAssign(task) }
+            binding.btnClose.setOnClickListener { onClickBtnClose(task) }
+            binding.btnUnassign.setOnClickListener { onClickBtnUnassign(task) }
+
             if (task.user == null) {
                 binding.btnAssign.visibility = View.VISIBLE
                 binding.tvAssigned.visibility = View.GONE
+                binding.btnUnassign.visibility = View.GONE
+                binding.btnClose.visibility = View.GONE
             } else {
                 binding.btnAssign.visibility = View.GONE
                 binding.tvAssigned.visibility = View.VISIBLE
                 binding.tvAssigned.text = task.user.name
+                if (task.user._id == Firebase.auth.currentUser!!.uid) {
+                    binding.btnUnassign.visibility = View.VISIBLE
+                    binding.btnClose.visibility = View.VISIBLE
+                }
             }
         }
     }

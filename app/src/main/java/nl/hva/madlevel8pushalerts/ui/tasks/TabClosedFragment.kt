@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import nl.hva.madlevel8pushalerts.databinding.FragmentTabClosedBinding
+import nl.hva.madlevel8pushalerts.models.Task
+import nl.hva.madlevel8pushalerts.viewModels.TasksViewModel
 
 class TabClosedFragment : Fragment() {
     private var _binding: FragmentTabClosedBinding? = null
     private val binding get() = _binding!!
-//    private val recyclerViewAdapter = AttachmentsAdapter(attachments)
+    private val viewModel: TasksViewModel by activityViewModels()
+    private val tasks: ArrayList<Task> = arrayListOf()
+    private lateinit var recyclerViewAdapter: ClosedTasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +30,9 @@ class TabClosedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initRecyclerView()
+        recyclerViewAdapter = ClosedTasksAdapter(tasks)
+        initRecyclerView()
+        observeTasks()
     }
 
     override fun onDestroyView() {
@@ -33,13 +40,21 @@ class TabClosedFragment : Fragment() {
         _binding = null
     }
 
-//    private fun initRecyclerView() {
-//        binding.rvTabAttachments.layoutManager =
-//            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-//        binding.rvTabAttachments.adapter = recyclerViewAdapter
-//        binding.rvTabAttachments.isNestedScrollingEnabled = false
-//        binding.rvTabAttachments.addItemDecoration(
-//            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-//        )
-//    }
+    private fun initRecyclerView() {
+        binding.rvTasks.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvTasks.adapter = recyclerViewAdapter
+        binding.rvTasks.isNestedScrollingEnabled = false
+        binding.rvTasks.addItemDecoration(
+            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        )
+    }
+
+    private fun observeTasks() {
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            tasks.clear()
+            tasks.addAll(it.filter { t -> t.closedAt != null })
+            recyclerViewAdapter.notifyDataSetChanged()
+        }
+    }
 }

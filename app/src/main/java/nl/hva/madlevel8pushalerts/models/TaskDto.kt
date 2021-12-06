@@ -5,11 +5,15 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import kotlinx.parcelize.Parcelize
 
-data class Task(
-    val _id: String = "",
+@Parcelize
+data class TaskDto(
+    @DocumentId val _id: String = "",
     val title: String = "",
     val description: String = "",
-    val user: User?,
+    val userId: String,
     val createdAt: Timestamp,
     val closedAt: Timestamp?,
-    val number: Int)
+    val number: Int,
+) : Parcelable {
+    constructor() : this("", "", "", "", Timestamp.now(), Timestamp.now(), 0)
+}
