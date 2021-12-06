@@ -10,4 +10,5 @@
     <string name="fill_credentials">Please fill credentials</string>
     <string name="tiTasksClosed">Closed</string>
     <string name="tiTasksOpen">Open</string>
+    <string name="btnAssign">Assign Me</string>
 </resources>

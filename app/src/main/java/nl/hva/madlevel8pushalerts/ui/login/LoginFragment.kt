@@ -58,10 +58,16 @@ class EmailFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     )
                         .show()
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    navigateToTaskScreen()
                 } else {
                     Toast.makeText(context, (task.exception?.message), Toast.LENGTH_LONG).show()
                 }
             }
+    }
+
+    private fun navigateToTaskScreen() {
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

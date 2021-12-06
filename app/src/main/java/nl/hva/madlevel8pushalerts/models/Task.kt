@@ -10,9 +10,10 @@ data class Task(
     @DocumentId val _id: String = "",
     val title: String = "",
     val description: String = "",
-    val userId: String = "",
+    val user: User?,
     val createdAt: Timestamp,
     val closedAt: Timestamp,
+    val number: Int,
 ) : Parcelable {
-    constructor() : this("", "", "", "", Timestamp.now(), Timestamp.now())
+    constructor() : this("", "", "", User(), Timestamp.now(), Timestamp.now(), 0)
 }
