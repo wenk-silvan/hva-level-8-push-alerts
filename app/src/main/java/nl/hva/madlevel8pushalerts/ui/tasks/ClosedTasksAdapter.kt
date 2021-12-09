@@ -28,6 +28,7 @@ class ClosedTasksAdapter(
             binding.tvTaskName.text = task.title
             binding.tvTaskCreatedAt.text = formatTimestamp(task.createdAt)
             binding.tvTaskNumber.text = "#${task.number}"
+            binding.tvAssigned.text = task.user!!.name
         }
     }
 

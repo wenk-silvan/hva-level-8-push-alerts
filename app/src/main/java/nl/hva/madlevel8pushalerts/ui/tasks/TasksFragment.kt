@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.messaging.FirebaseMessagingService
 import nl.hva.madlevel8pushalerts.R
 import nl.hva.madlevel8pushalerts.databinding.FragmentTasksBinding
 import nl.hva.madlevel8pushalerts.models.Task
+import nl.hva.madlevel8pushalerts.services.EVENTS
 import nl.hva.madlevel8pushalerts.viewModels.TasksViewModel
 
 class TasksFragment : Fragment() {
@@ -32,8 +34,8 @@ class TasksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getTasks(false)
-        observeTasks()
         initTabLayout()
+        observeNotification()
     }
 
     override fun onDestroyView() {
@@ -45,7 +47,9 @@ class TasksFragment : Fragment() {
         val fm = requireActivity().supportFragmentManager
         binding.viewPager.adapter = TabLayoutFragmentAdapter(fm, lifecycle)
         binding.tabLayout.removeAllTabs()
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.tiTasksOpen)))
+        binding.tabLayout.addTab(
+            binding.tabLayout.newTab().setText(getString(R.string.tiTasksOpen))
+        )
         binding.tabLayout.addTab(
             binding.tabLayout.newTab().setText(getString(R.string.tiTasksClosed))
         )
@@ -66,9 +70,9 @@ class TasksFragment : Fragment() {
         })
     }
 
-    private fun observeTasks() {
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            print(it)
+    private fun observeNotification() {
+        EVENTS.newNotification.observe(viewLifecycleOwner) {
+            viewModel.addTask(it.title, it.description, it.source)
         }
     }
 }

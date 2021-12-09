@@ -1,5 +1,6 @@
 package nl.hva.madlevel8pushalerts.services
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,14 +30,23 @@ class TasksRepository {
                         tempList.add(fromDto(task, users))
                 }
             }
+            Log.i("GET", "Fetched ${tempList.size} tasks")
+            tempList.sortByDescending { s -> s.createdAt }
             _tasks.value = tempList
         } catch (e: Exception) {
             throw TasksRetrievalError("Error while fetching tasks from Firestore: \n${e.message}")
         }
     }
 
+    suspend fun insertTask(task: Task) {
+        taskCollection.add(toDto(task)).addOnCompleteListener {
+            Log.i("INSERT", "Added task document with ID: ${it.result.id}")
+        }
+    }
+
     suspend fun updateTask(id: String, field: String, value: Any) {
         taskCollection.document(id).update(field, value).await()
+        Log.i("UPDATE", "Updated task with ID: $id")
     }
 
     private suspend fun getUsers(): ArrayList<User> {
@@ -49,6 +59,7 @@ class TasksRepository {
                     users.add(task)
             }
         }
+        Log.i("GET", "Fetched ${users.size} users")
         return users
     }
 
@@ -61,6 +72,18 @@ class TasksRepository {
             t.createdAt,
             t.closedAt,
             t.number
+        )
+    }
+
+    private fun toDto(task: Task): TaskDto {
+        return TaskDto(
+            task._id,
+            task.title,
+            task.description,
+            if (task.user == null) "" else task.user._id,
+            task.createdAt,
+            task.closedAt,
+            task.number
         )
     }
 }

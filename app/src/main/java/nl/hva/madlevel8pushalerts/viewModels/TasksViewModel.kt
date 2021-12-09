@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
+import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.coroutines.launch
 import nl.hva.madlevel8pushalerts.models.Task
 import nl.hva.madlevel8pushalerts.models.TaskDto
@@ -13,7 +15,7 @@ import nl.hva.madlevel8pushalerts.models.User
 import nl.hva.madlevel8pushalerts.services.TasksRepository
 import nl.hva.madlevel8pushalerts.services.TasksRetrievalError
 
-class TasksViewModel (application: Application) : AndroidViewModel(application) {
+class TasksViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = TasksRepository()
 
     var tasks: LiveData<List<Task>> = repository.tasks
@@ -37,6 +39,31 @@ class TasksViewModel (application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun addTask(title: String, description: String, source: String) {
+        if (tasks.value == null)
+            return
+
+        viewModelScope.launch {
+            try {
+                val newTask = Task(
+                    "",
+                    title,
+                    description,
+                    null,
+                    Timestamp.now(),
+                    null,
+                    tasks.value!!.last().number + 1
+                )
+                repository.insertTask(newTask)
+                getTasks(true)
+            } catch (error: TasksRetrievalError) {
+                _errorText.value = error.message
+                Log.e("Error while inserting task", error.message.toString())
+            }
+        }
+
+    }
+
     fun updateTask(taskId: String, field: String, value: Any) {
         viewModelScope.launch {
             try {
@@ -47,17 +74,5 @@ class TasksViewModel (application: Application) : AndroidViewModel(application) 
                 Log.e("Error while updating task", error.message.toString())
             }
         }
-    }
-
-    private fun fromDto(t: TaskDto): Task {
-        return Task(
-            t._id,
-            t.title,
-            t.description,
-            User(),
-            t.createdAt,
-            t.closedAt,
-            t.number
-        )
     }
 }
