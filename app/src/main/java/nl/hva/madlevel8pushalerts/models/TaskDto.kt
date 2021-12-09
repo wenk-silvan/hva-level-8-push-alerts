@@ -14,6 +14,7 @@ data class TaskDto(
     val createdAt: Timestamp,
     val closedAt: Timestamp?,
     val number: Int,
+    val source: String = "",
 ) : Parcelable {
-    constructor() : this("", "", "", "", Timestamp.now(), Timestamp.now(), 0)
+    constructor() : this("", "", "", "", Timestamp.now(), Timestamp.now(), 0, "")
 }

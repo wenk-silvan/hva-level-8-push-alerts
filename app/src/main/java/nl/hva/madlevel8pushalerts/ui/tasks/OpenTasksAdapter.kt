@@ -32,6 +32,8 @@ class OpenTasksAdapter(
             binding.tvTaskName.text = task.title
             binding.tvTaskCreatedAt.text = formatTimestamp(task.createdAt)
             binding.tvTaskNumber.text = "#${task.number}"
+            binding.tvTaskDescription.text = task.description
+            binding.tvTaskSource.text = task.source
 
             binding.btnAssign.setOnClickListener { onClickBtnAssign(task) }
             binding.btnClose.setOnClickListener { onClickBtnClose(task) }
