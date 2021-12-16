@@ -48,10 +48,10 @@ class TasksFragment : Fragment() {
         binding.viewPager.adapter = TabLayoutFragmentAdapter(fm, lifecycle)
         binding.tabLayout.removeAllTabs()
         binding.tabLayout.addTab(
-            binding.tabLayout.newTab().setText(getString(R.string.tiTasksOpen))
+            binding.tabLayout.newTab().setText(getString(R.string.tiTasksOpen)).setIcon(R.drawable.ic_baseline_list_24)
         )
         binding.tabLayout.addTab(
-            binding.tabLayout.newTab().setText(getString(R.string.tiTasksClosed))
+            binding.tabLayout.newTab().setText(getString(R.string.tiTasksClosed)).setIcon(R.drawable.ic_baseline_history_24)
         )
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
