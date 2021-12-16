@@ -32,7 +32,7 @@ class OpenTasksAdapter(
             binding.tvTaskName.text = task.title
             binding.tvTaskCreatedAt.text = formatTimestamp(task.createdAt)
             binding.tvTaskNumber.text = "#${task.number}"
-            binding.tvTaskDescription.text = task.description
+            binding.tvTaskDescription.text = shortDescription(task.description)
             binding.tvTaskSource.text = task.source
 
             binding.btnAssign.setOnClickListener { onClickBtnAssign(task) }
@@ -77,5 +77,9 @@ class OpenTasksAdapter(
         val milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         val sdf = SimpleDateFormat("dd-MM-yyyy - hh:mm", Locale.getDefault())
         return sdf.format(Date(milliseconds)).toString()
+    }
+
+    private fun shortDescription(description: String): String {
+        return if (description.length > 25) description.substring(0, 25) + "..." else description
     }
 }

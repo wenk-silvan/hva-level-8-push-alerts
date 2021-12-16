@@ -84,7 +84,8 @@ class TasksRepository {
             if (task.user == null) "" else task.user._id,
             task.createdAt,
             task.closedAt,
-            task.number
+            task.number,
+            task.source
         )
     }
 }

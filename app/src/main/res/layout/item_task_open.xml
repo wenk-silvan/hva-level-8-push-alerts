@@ -84,20 +84,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTaskDescription"
-            tools:text="01.04.21 - 20:34" />
-
-        <Button
-            android:id="@+id/btnAssign"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btnAssign"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="01.04.21 - 20:34" />
 
         <TextView
             android:id="@+id/tvAssigned"
@@ -111,14 +100,26 @@
             tools:text="Mark" />
 
         <Button
+            android:id="@+id/btnAssign"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnAssign"
+            android:textSize="11sp"
+            android:padding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTaskDescription" />
+
+        <Button
             android:id="@+id/btnUnassign"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btnUnassign"
             android:textSize="11sp"
+            android:padding="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTaskCreatedAt" />
+            app:layout_constraintTop_toBottomOf="@id/tvTaskDescription" />
 
         <Button
             android:id="@+id/btnClose"
@@ -127,9 +128,9 @@
             android:layout_height="wrap_content"
             android:text="@string/btnClose"
             android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="0dp"
             app:layout_constraintStart_toEndOf="@id/btnUnassign"
-            app:layout_constraintTop_toBottomOf="@id/tvTaskCreatedAt" />
+            app:layout_constraintTop_toBottomOf="@id/tvTaskDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
