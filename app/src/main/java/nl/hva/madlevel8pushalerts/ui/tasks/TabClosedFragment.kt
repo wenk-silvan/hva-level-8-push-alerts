@@ -33,6 +33,7 @@ class TabClosedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initChipGroup()
         initRecyclerView()
+        initSwipeToRefresh()
         observeTasks()
     }
 
@@ -61,6 +62,15 @@ class TabClosedFragment : Fragment() {
         binding.rvTasks.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
+    }
+
+    private fun initSwipeToRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getTasks(true)
+            binding.chipFilterMine.isChecked = false
+            binding.chipFilterOld.isChecked = false
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun observeTasks() {

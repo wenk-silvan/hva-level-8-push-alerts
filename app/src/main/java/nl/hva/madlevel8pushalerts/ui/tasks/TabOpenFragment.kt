@@ -16,6 +16,9 @@ import com.google.firebase.ktx.Firebase
 import nl.hva.madlevel8pushalerts.databinding.FragmentTabOpenBinding
 import nl.hva.madlevel8pushalerts.models.Task
 import nl.hva.madlevel8pushalerts.viewModels.TasksViewModel
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+
 
 class TabOpenFragment : Fragment() {
     private var _binding: FragmentTabOpenBinding? = null
@@ -37,6 +40,7 @@ class TabOpenFragment : Fragment() {
         viewModel.tasks.value?.let { tasks.addAll(it) }
         initChipGroup()
         initRecyclerView()
+        initSwipeToRefresh()
         observeTasks()
     }
 
@@ -70,6 +74,15 @@ class TabOpenFragment : Fragment() {
         binding.rvTasks.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
+    }
+
+    private fun initSwipeToRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getTasks(true)
+            binding.chipFilterMine.isChecked = false
+            binding.chipFilterUnassigned.isChecked = false
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun observeTasks() {

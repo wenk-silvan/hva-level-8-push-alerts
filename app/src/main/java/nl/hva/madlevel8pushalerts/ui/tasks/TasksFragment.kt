@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.messaging.FirebaseMessagingService
 import nl.hva.madlevel8pushalerts.R
 import nl.hva.madlevel8pushalerts.databinding.FragmentTasksBinding
-import nl.hva.madlevel8pushalerts.models.Task
 import nl.hva.madlevel8pushalerts.services.EVENTS
 import nl.hva.madlevel8pushalerts.viewModels.TasksViewModel
 

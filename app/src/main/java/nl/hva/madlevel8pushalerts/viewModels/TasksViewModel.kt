@@ -60,6 +60,7 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             try {
+                val maxNumber = tasks.value!!.maxOf { t -> t.number }
                 val newTask = Task(
                     "",
                     title,
@@ -67,7 +68,8 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
                     null,
                     Timestamp.now(),
                     null,
-                    tasks.value!!.last().number + 1
+                    maxNumber + 1,
+                    source
                 )
                 repository.insertTask(newTask)
                 getTasks(true)
