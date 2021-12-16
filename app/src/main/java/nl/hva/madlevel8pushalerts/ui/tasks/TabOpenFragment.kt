@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -34,7 +35,12 @@ class TabOpenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.tasks.value?.let { tasks.addAll(it) }
-        recyclerViewAdapter = OpenTasksAdapter(tasks, {t: Task -> onClickBtnAssign(t)}, {t: Task -> onClickBtnClose(t)}, {t: Task -> onClickBtnUnassign(t)})
+        recyclerViewAdapter = OpenTasksAdapter(
+            tasks,
+            { t: Task -> onClickBtnAssign(t) },
+            { t: Task -> onClickBtnClose(t) },
+            { t: Task -> onClickBtnUnassign(t) },
+            { t: Task -> onClickCard(t) })
         initRecyclerView()
         observeTasks()
     }
@@ -72,5 +78,12 @@ class TabOpenFragment : Fragment() {
 
     private fun onClickBtnUnassign(task: Task) {
         viewModel.updateTask(task._id, "userId", "")
+    }
+
+    private fun onClickCard(task: Task) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(task.title)
+            .setMessage(task.description)
+            .show()
     }
 }

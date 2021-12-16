@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ClosedTasksAdapter(
-    private val tasks: List<Task>
+    private val tasks: List<Task>,
+    val onClickCard: (Task) -> Unit,
 ) :
     RecyclerView.Adapter<ClosedTasksAdapter.ViewHolder>() {
 
@@ -36,6 +37,8 @@ class ClosedTasksAdapter(
             binding.tvAssigned.text = task.user!!.name
             binding.tvTaskDescription.text = shortDescription(task.description)
             binding.tvTaskSource.text = task.source
+
+            binding.mcvChapter.setOnClickListener { onClickCard(task) }
         }
     }
 

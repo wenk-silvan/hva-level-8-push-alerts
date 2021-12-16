@@ -1,6 +1,8 @@
 package nl.hva.madlevel8pushalerts.ui.tasks
 
 import android.content.Context
+import android.graphics.Color
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ class OpenTasksAdapter(
     val onClickBtnAssign: (Task) -> Unit,
     val onClickBtnClose: (Task) -> Unit,
     val onClickBtnUnassign: (Task) -> Unit,
+    val onClickCard: (Task) -> Unit,
 ) :
     RecyclerView.Adapter<OpenTasksAdapter.ViewHolder>() {
 
@@ -38,12 +41,14 @@ class OpenTasksAdapter(
             binding.btnAssign.setOnClickListener { onClickBtnAssign(task) }
             binding.btnClose.setOnClickListener { onClickBtnClose(task) }
             binding.btnUnassign.setOnClickListener { onClickBtnUnassign(task) }
+            binding.mcvChapter.setOnClickListener { onClickCard(task) }
 
             if (task.user == null) {
                 binding.btnAssign.visibility = View.VISIBLE
                 binding.tvAssigned.visibility = View.GONE
                 binding.btnUnassign.visibility = View.GONE
                 binding.btnClose.visibility = View.GONE
+                binding.mcvChapter.setCardBackgroundColor(Color.parseColor("#f3f6f4"))
             } else {
                 binding.btnAssign.visibility = View.GONE
                 binding.tvAssigned.visibility = View.VISIBLE
