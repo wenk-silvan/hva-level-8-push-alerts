@@ -13,10 +13,23 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.MadLevel8PushAlerts.PopupOverlay" />
+            app:popupTheme="@style/Theme.MadLevel8PushAlerts.PopupOverlay">
+
+            <ImageView
+                android:id="@+id/ivLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginVertical="12dp"
+                android:layout_marginHorizontal="16dp"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/ic_baseline_logout_24" />
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

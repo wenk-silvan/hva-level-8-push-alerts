@@ -13,4 +13,5 @@
     <string name="btnAssign">Assign Me</string>
     <string name="btnUnassign">Unassign</string>
     <string name="btnClose">close</string>
+    <string name="logout">Logout</string>
 </resources>

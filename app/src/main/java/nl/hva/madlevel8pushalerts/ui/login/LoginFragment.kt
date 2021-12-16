@@ -2,6 +2,8 @@ package nl.hva.madlevel8pushalerts.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ class EmailFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private var passwordVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +36,11 @@ class EmailFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             authenticate()
         }
+        binding.ibPasswordVisibility.setOnClickListener {
+            passwordVisible = !passwordVisible
+            obscurePassword()
+        }
+        obscurePassword()
     }
 
     override fun onDestroyView() {
@@ -69,5 +77,11 @@ class EmailFragment : Fragment() {
         val intent = Intent(context, MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
+    }
+
+    private fun obscurePassword() {
+        binding.tietPassword.transformationMethod =
+            if (passwordVisible) HideReturnsTransformationMethod.getInstance()
+            else PasswordTransformationMethod.getInstance()
     }
 }
