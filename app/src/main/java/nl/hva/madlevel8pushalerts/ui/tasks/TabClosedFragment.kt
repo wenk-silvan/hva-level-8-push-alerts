@@ -31,7 +31,7 @@ class TabClosedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewAdapter = ClosedTasksAdapter(tasks) { t: Task -> onClickCard(t) }
+        initChipGroup()
         initRecyclerView()
         observeTasks()
     }
@@ -41,7 +41,19 @@ class TabClosedFragment : Fragment() {
         _binding = null
     }
 
+    private fun initChipGroup() {
+        binding.chipFilterMine.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.getMyTasks()
+            else viewModel.getTasks(true)
+        }
+        binding.chipFilterOld.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.getOldTasks()
+            else viewModel.getTasks(true)
+        }
+    }
+
     private fun initRecyclerView() {
+        recyclerViewAdapter = ClosedTasksAdapter(tasks) { t: Task -> onClickCard(t) }
         binding.rvTasks.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.rvTasks.adapter = recyclerViewAdapter

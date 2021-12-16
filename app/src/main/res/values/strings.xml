@@ -14,4 +14,7 @@
     <string name="btnUnassign">Unassign</string>
     <string name="btnClose">close</string>
     <string name="logout">Logout</string>
+    <string name="chipMine">Mine</string>
+    <string name="chipUnassigned">Unassigned</string>
+    <string name="chipOld">Older than 30 days</string>
 </resources>

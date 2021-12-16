@@ -50,6 +50,7 @@ class OpenTasksAdapter(
                 binding.btnClose.visibility = View.GONE
                 binding.mcvChapter.setCardBackgroundColor(Color.parseColor("#f3f6f4"))
             } else {
+                binding.mcvChapter.setCardBackgroundColor(Color.parseColor("#ffffff"))
                 binding.btnAssign.visibility = View.GONE
                 binding.tvAssigned.visibility = View.VISIBLE
                 binding.tvAssigned.text = task.user.name

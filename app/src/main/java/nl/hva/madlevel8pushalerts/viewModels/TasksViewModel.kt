@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.coroutines.launch
 import nl.hva.madlevel8pushalerts.models.Task
@@ -37,6 +40,18 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
                 Log.e("Error while fetching tasks", error.message.toString())
             }
         }
+    }
+
+    fun getMyTasks() {
+        repository.getTasksByUser(Firebase.auth.currentUser!!.uid)
+    }
+
+    fun getUnassignedTasks() {
+        repository.getTasksWithoutUser()
+    }
+
+    fun getOldTasks() {
+        repository.getTasksOlderThanNumberOfDays(30)
     }
 
     fun addTask(title: String, description: String, source: String) {

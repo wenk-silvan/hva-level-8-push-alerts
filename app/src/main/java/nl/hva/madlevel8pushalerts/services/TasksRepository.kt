@@ -3,12 +3,15 @@ package nl.hva.madlevel8pushalerts.services
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.madlevel8pushalerts.models.Task
 import nl.hva.madlevel8pushalerts.models.TaskDto
 import nl.hva.madlevel8pushalerts.models.User
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TasksRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -36,6 +39,20 @@ class TasksRepository {
         } catch (e: Exception) {
             throw TasksRetrievalError("Error while fetching tasks from Firestore: \n${e.message}")
         }
+    }
+
+    fun getTasksByUser(userId: String) {
+        _tasks.value = _tasks.value?.filter { t -> t.user?._id == userId }
+    }
+
+    fun getTasksWithoutUser() {
+        _tasks.value = _tasks.value?.filter { t -> t.user == null }
+    }
+
+    fun getTasksOlderThanNumberOfDays(days: Int) {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -days)
+        _tasks.value = _tasks.value?.filter { t -> t.createdAt.toDate() < calendar.time }
     }
 
     suspend fun insertTask(task: Task) {

@@ -35,12 +35,7 @@ class TabOpenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.tasks.value?.let { tasks.addAll(it) }
-        recyclerViewAdapter = OpenTasksAdapter(
-            tasks,
-            { t: Task -> onClickBtnAssign(t) },
-            { t: Task -> onClickBtnClose(t) },
-            { t: Task -> onClickBtnUnassign(t) },
-            { t: Task -> onClickCard(t) })
+        initChipGroup()
         initRecyclerView()
         observeTasks()
     }
@@ -50,7 +45,24 @@ class TabOpenFragment : Fragment() {
         _binding = null
     }
 
+    private fun initChipGroup() {
+        binding.chipFilterMine.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.getMyTasks()
+            else viewModel.getTasks(true)
+        }
+        binding.chipFilterUnassigned.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.getUnassignedTasks()
+            else viewModel.getTasks(true)
+        }
+    }
+
     private fun initRecyclerView() {
+        recyclerViewAdapter = OpenTasksAdapter(
+            tasks,
+            { t: Task -> onClickBtnAssign(t) },
+            { t: Task -> onClickBtnClose(t) },
+            { t: Task -> onClickBtnUnassign(t) },
+            { t: Task -> onClickCard(t) })
         binding.rvTasks.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.rvTasks.adapter = recyclerViewAdapter
